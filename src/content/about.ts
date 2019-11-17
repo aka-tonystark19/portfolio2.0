@@ -1,5 +1,5 @@
 export default [
-  { command: "eric.currentLocation", result: `"Montreal, Quebec"` },
+  { command: "eric.currentLocation", result: `"Montreal, QC, Canada"` },
   {
     command: "eric.contactInfo",
     urls: [
@@ -11,9 +11,7 @@ export default [
   { command: "eric.resume", urls: [{ name: "ericellb.pdf", src: "/resume.pdf" }] },
   {
     command: "eric.skills",
-    result: `["TypeScript", "Embedded C", "HTML5", "CSS3", "React", "Redux", "Material Design", "NodeJS", "Express", "REST API", "Redis", "MySQL", "MongoDB", "Linux", "Git", "Jest", "Networking"
-
-]`
+    result: `["TypeScript", "C", "PHP", "TDD", "HTML5 / CSS3", "React", "Redux", "Material UI", "Node.js", "Express", "Laravel", "REST API", "MySQL", "MongoDB", "Redis", "Linux", "Git", "Networking"]`
   },
   { command: "eric.languages", result: `["English", "French"]` }
 ];

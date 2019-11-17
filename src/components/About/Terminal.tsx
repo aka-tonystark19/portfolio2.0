@@ -78,12 +78,14 @@ const useStyles = makeStyles(theme => ({
 }));
 
 let eric = {
-  currentLocation: "Montreal, Quebec",
+  currentLocation: "Montreal, QC, Canada",
   contactInfo: ["ericellb@gmail.com", "LinkedIn", "github"],
   resume: "resume.pdf",
   skills: [
     "TypeScript",
-    "Embedded C",
+    "C",
+    "PHP",
+    "TDD",
     "HTML5",
     "CSS3",
     "React",
@@ -91,13 +93,13 @@ let eric = {
     "Material Design",
     "NodeJS",
     "Express",
+    "Laravel",
     "REST API",
-    "Redis",
     "MySQL",
     "MongoDB",
+    "Redis",
     "Linux",
     "Git",
-    "Jest",
     "Networking"
   ],
   languages: ["English", "French"]
