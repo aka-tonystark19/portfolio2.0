@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   contactContainer: {
-    marginTop: "80px",
+    marginTop: "60px",
     background: "#f6f9fc"
   },
   title: {
@@ -21,6 +21,7 @@ const useStyles = makeStyles(theme => ({
   },
   contactInfo: {
     display: "flex",
+    flexWrap: "wrap",
     justifyContent: "center",
     fontSize: "18px",
     marginBottom: "40px"
@@ -43,6 +44,10 @@ const useStyles = makeStyles(theme => ({
     },
     "&:hover:after": {
       width: "80%"
+    },
+    [theme.breakpoints.down("xs")]: {
+      flexBasis: "100%",
+      textAlign: "center"
     }
   },
   footer: {

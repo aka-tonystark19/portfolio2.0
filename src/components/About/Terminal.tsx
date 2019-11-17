@@ -66,12 +66,12 @@ export default function Terminal() {
     {
       command: "eric.contactInfo",
       urls: [
-        { name: "ericellb@gmail.com", src: "ericellb@gmail.com" },
-        { name: "LinkedIn", src: "https://linkedin.com" },
-        { name: "github", src: "https://github.com" }
+        { name: "ericellb@gmail.com", src: "mailto:ericellb@gmail.com" },
+        { name: "LinkedIn", src: "https://www.linkedin.com/in/eric-ellbogen-742722b1/" },
+        { name: "github", src: "https://github.com/ericellb" }
       ]
     },
-    { command: "eric.resume", urls: [{ name: "ericellb.pdf", src: "ericellb@gmail.com" }] },
+    { command: "eric.resume", urls: [{ name: "ericellb.pdf", src: "/resume.pdf" }] },
     {
       command: "eric.skills",
       result: `["TypeScript", "Embedded C", "HTML5", "CSS3", "React", "Redux", "Material Design", "NodeJS", "Express", "REST API", "Redis", "MySQL", "MongoDB", "Linux", "Git", "Jest", "Networking"
@@ -106,7 +106,11 @@ export default function Terminal() {
                   } else {
                     urlName = '"' + url.name + '"]';
                   }
-                  return <a href={url.src}>{urlName}</a>;
+                  return (
+                    <a href={url.src} target="_blank">
+                      {urlName}
+                    </a>
+                  );
                 })}
             </div>
           );

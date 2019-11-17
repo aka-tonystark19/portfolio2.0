@@ -18,13 +18,16 @@ const useStyles = makeStyles(theme => ({
     ["& span"]: {
       backgroundColor: "rgba(116,127,224,.65)",
       animation: "$caret 1s steps(1) infinite"
+    },
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "32px"
     }
   },
   content: {
     fontSize: "22px",
     lineHeight: "40px",
-    marginTop: "80px",
-    marginBottom: "80px",
+    marginTop: "40px",
+    marginBottom: "40px",
     fontWeight: 300
   }
 }));

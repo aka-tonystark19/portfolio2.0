@@ -12,7 +12,10 @@ const useStyles = makeStyles(theme => ({
     marginBottom: "40px"
   },
   cardImageContainer: {
-    width: "40%"
+    width: "40%",
+    [theme.breakpoints.down("sm")]: {
+      width: "0%"
+    }
   },
   cardImage: {
     width: "100%",
@@ -20,7 +23,11 @@ const useStyles = makeStyles(theme => ({
   },
   cardMain: {
     width: "60%",
-    padding: "48px"
+    padding: "48px",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      boxSizing: "border-box"
+    }
   },
   cardTitle: {
     fontSize: "22px",
@@ -33,20 +40,25 @@ const useStyles = makeStyles(theme => ({
   },
   cardSkillsContainer: {
     display: "flex",
-    marginBottom: "24px"
+    marginBottom: "24px",
+    flexWrap: "wrap"
   },
   cardSkill: {
     padding: "6px",
     border: "2px solid #92eac0",
     borderRadius: "8px",
-    marginRight: "16px",
+    margin: "4px",
     fontSize: "14px"
   },
   cardButtonContainer: {
-    display: "flex"
+    display: "flex",
+    flexWrap: "wrap"
   },
   cardButton: {
-    marginRight: "16px"
+    marginRight: "16px",
+    [theme.breakpoints.down("sm")]: {
+      marginBottom: "16px"
+    }
   },
   cardButtonDemo: {
     background: "#747fe0",

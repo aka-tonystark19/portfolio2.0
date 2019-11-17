@@ -4,13 +4,13 @@ import ProjectCard from "./ProjectCard";
 
 const useStyles = makeStyles(theme => ({
   projectsContainer: {
-    marginTop: "80px",
+    marginTop: "60px",
     background: "#f6f9fc"
   },
   title: {
     textAlign: "center",
     fontSize: "32px",
-    marginBottom: "80px"
+    marginBottom: "60px"
   }
 }));
 
