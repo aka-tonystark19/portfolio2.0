@@ -76,7 +76,7 @@ export default function Contact() {
           Github
         </a>
       </div>
-      <div className={classes.footer}> Created by Eric Ellbogen 2019 </div>
+      <div className={classes.footer}> Eric Ellbogen 2019 </div>
     </div>
   );
 }

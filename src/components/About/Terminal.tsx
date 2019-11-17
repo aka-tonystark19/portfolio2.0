@@ -75,6 +75,32 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+let eric = {
+  currentLocation: "Montreal, Quebec",
+  contactInfo: ["ericellb@gmail.com", "LinkedIn", "github"],
+  resume: "resume.pdf",
+  skills: [
+    "TypeScript",
+    "Embedded C",
+    "HTML5",
+    "CSS3",
+    "React",
+    "Redux",
+    "Material Design",
+    "NodeJS",
+    "Express",
+    "REST API",
+    "Redis",
+    "MySQL",
+    "MongoDB",
+    "Linux",
+    "Git",
+    "Jest",
+    "Networking"
+  ],
+  languages: ["English", "French"]
+};
+
 export default function Terminal() {
   const classes = useStyles({});
 
@@ -135,9 +161,11 @@ export default function Terminal() {
 
     if (command.includes("=")) {
       setAboutInfos(prevstate => [...prevstate, { command: command, result: "Stop trying to overwrite me 😥" }]);
-    } else if (command === "eric.currentLocation") {
+    } else if (command === "eric") {
+      setAboutInfos(prevstate => [...prevstate, { command: command, result: JSON.stringify(eric) }]);
+    } else if (command === "eric.currentlocation") {
       setAboutInfos(prevstate => [...prevstate, aboutInfos[0]]);
-    } else if (command === "eric.contactInfo") {
+    } else if (command === "eric.contactinfo") {
       setAboutInfos(prevstate => [...prevstate, aboutInfos[1]]);
     } else if (command === "eric.resume") {
       setAboutInfos(prevstate => [...prevstate, aboutInfos[2]]);
