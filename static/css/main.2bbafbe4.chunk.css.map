@@ -1,0 +1,1 @@
+{"version":3,"sources":["style.css"],"names":[],"mappings":"AAAA,KACE,oBAAuB,CACvB,sBACF,CACA,KACE,QAAS,CACT,eACF","file":"main.2bbafbe4.chunk.css","sourcesContent":["html {\n  font-family: \"Consolas\";\n  scroll-behavior: smooth;\n}\nbody {\n  margin: 0;\n  background: #eeeeee;\n}\n"]}
