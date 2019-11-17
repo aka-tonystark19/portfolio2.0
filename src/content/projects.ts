@@ -5,7 +5,7 @@ export default [
       "Discord clone built in Typescript + React + Express. I created this to better understand Websockets and to learn Functional Components in React. The application has full functionality including Server + Channel creations, Private Messaging and even Voice Chat using WebRTC.",
     liveurl: "https://ericellb.github.io/React-Discord-Clone/",
     repourl: "https://github.com/ericellb/React-Discord-Clone",
-    imageurl: "discord",
+    imageurl: "discordp",
     skills: ["TypeScript", "React", "Redux", "Express", "MySQL", "Socket.io", "Material-UI"]
   },
   {
