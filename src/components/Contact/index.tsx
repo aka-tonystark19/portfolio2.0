@@ -67,13 +67,13 @@ export default function Contact() {
         Contact Me{" "}
       </div>
       <div className={classes.contactInfo}>
-        <a href="mailto:ericellb@gmail.com" className={classes.contactItem}>
+        <a href="mailto:ericellb@gmail.com" className={classes.contactItem} target="_blank">
           ericellb@gmail.com
         </a>
-        <a href="https://www.linkedin.com/in/eric-ellbogen-742722b1/" className={classes.contactItem}>
+        <a href="https://www.linkedin.com/in/eric-ellbogen-742722b1/" className={classes.contactItem} target="_blank">
           LinkedIn
         </a>
-        <a href="https://github.com/ericellb" className={classes.contactItem}>
+        <a href="https://github.com/ericellb" className={classes.contactItem} target="_blank">
           Github
         </a>
       </div>

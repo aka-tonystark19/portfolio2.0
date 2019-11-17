@@ -32,7 +32,7 @@ export default [
       "Visualized sorting algorithm application built in TypeScript + React + Express. Visualize how various sorting algorithms work, and be able to control speed and pause / play sorting",
     liveurl: "https://ericellb.github.io/Visual-Sort/",
     repourl: "https://github.com/ericellb/Visual-Sort",
-    imageurl: "sorter",
+    imageurl: "sorterp",
     skills: ["TypeScript", "React", "Redux", "Express", "MySQL", "Redis", "Material-UI"]
   }
 ];
