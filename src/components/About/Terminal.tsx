@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import math from "mathjs";
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
@@ -46,7 +47,7 @@ const useStyles = makeStyles(theme => ({
     ["&::before"]: {
       content: "'> '"
     },
-    ["& span"]: {
+    ["& span.caret"]: {
       backgroundColor: "hsla(0,0%,97%,.65)",
       animation: "$caret 1s steps(1) infinite"
     }
@@ -56,12 +57,28 @@ const useStyles = makeStyles(theme => ({
   },
   "@keyframes caret": {
     "50%": { background: "transparent" }
+  },
+  commandInput: {
+    background: "#5a5d7a",
+    outline: "none",
+    border: "none",
+    color: "white",
+    textShadow: "0 0 0 gray",
+    width: "0px",
+    fontSize: "18px",
+    fontFamily: "Consolas",
+    fontWeight: 200,
+    "&:focus": {
+      outline: "0px solid transparent;",
+      border: "none"
+    }
   }
 }));
 
 export default function Terminal() {
   const classes = useStyles({});
-  let aboutInfos = [
+
+  let aboutInfoArr = [
     { command: "eric.currentLocation", result: `"Montreal, Quebec"` },
     {
       command: "eric.contactInfo",
@@ -81,8 +98,71 @@ export default function Terminal() {
     { command: "eric.languages", result: `["English", "French"]` }
   ];
 
+  const [aboutInfos, setAboutInfos] = useState(aboutInfoArr);
+
+  // Setup event listener for span content editable input
+  useEffect(() => {
+    let input = document.getElementById("commandInput");
+    if (input) {
+      input.addEventListener("keypress", e => {
+        let event = e as any;
+        if (event.target) {
+          let command = event.target.value;
+          let input = document.getElementById("commandInput");
+          if (event.key === "Enter") {
+            event.preventDefault();
+            console.log(command);
+            if (parseCommand(command)) {
+              event.target.innerHTML = "";
+            }
+          }
+        }
+      });
+
+      input.addEventListener("input", e => {
+        let event = e as any;
+        let command = event.target.value;
+        if (input) {
+          input.style.width = command.length + "ch";
+        }
+      });
+    }
+  }, []);
+
+  const parseCommand = (command: string) => {
+    let validCommand = true;
+
+    if (command.includes("=")) {
+      setAboutInfos(prevstate => [...prevstate, { command: command, result: "Stop trying to overwrite me 😥" }]);
+    } else if (command === "eric.currentLocation") {
+      setAboutInfos(prevstate => [...prevstate, aboutInfos[0]]);
+    } else if (command === "eric.contactInfo") {
+      setAboutInfos(prevstate => [...prevstate, aboutInfos[1]]);
+    } else if (command === "eric.resume") {
+      setAboutInfos(prevstate => [...prevstate, aboutInfos[2]]);
+    } else if (command === "eric.skills") {
+      setAboutInfos(prevstate => [...prevstate, aboutInfos[3]]);
+    } else if (command === "eric.languages") {
+      setAboutInfos(prevstate => [...prevstate, aboutInfos[4]]);
+    } else if (command === "help") {
+      setAboutInfos(prevstate => [...prevstate, { command: "help", result: "try playing around to find cool stuff!" }]);
+    } else {
+      validCommand = false;
+      setAboutInfos(prevstate => [...prevstate, { command: command, result: `${command} : command not found ` }]);
+    }
+
+    return validCommand;
+  };
+
+  const focusInput = () => {
+    let input = document.getElementById("commandInput");
+    if (input) {
+      input.focus();
+    }
+  };
+
   return (
-    <div className={classes.terminal}>
+    <div className={classes.terminal} onClick={() => focusInput()}>
       <div className={classes.header}>
         <div className={classes.termButton + " " + classes.exit}></div>
         <div className={classes.termButton + " " + classes.minimize}></div>
@@ -117,7 +197,8 @@ export default function Terminal() {
         })}
         <div className={classes.aboutInfo}>
           <div className={classes.infoCommand}>
-            <span>&nbsp;</span>
+            <input id="commandInput" className={classes.commandInput} />
+            <span className="caret">&nbsp;</span>
           </div>
         </div>
       </div>
