@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import math from "mathjs";
+import { evaluate } from "mathjs";
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
@@ -131,6 +131,7 @@ export default function Terminal() {
 
   const parseCommand = (command: string) => {
     let validCommand = true;
+    command = command.toLocaleLowerCase();
 
     if (command.includes("=")) {
       setAboutInfos(prevstate => [...prevstate, { command: command, result: "Stop trying to overwrite me 😥" }]);
@@ -147,8 +148,16 @@ export default function Terminal() {
     } else if (command === "help") {
       setAboutInfos(prevstate => [...prevstate, { command: "help", result: "try playing around to find cool stuff!" }]);
     } else {
-      validCommand = false;
-      setAboutInfos(prevstate => [...prevstate, { command: command, result: `${command} : command not found ` }]);
+      // Try to eval for math
+      try {
+        validCommand = true;
+        let result = evaluate(command);
+        setAboutInfos(prevstate => [...prevstate, { command: command, result: result }]);
+      } catch (err) {
+        validCommand = false;
+        console.log(err);
+        setAboutInfos(prevstate => [...prevstate, { command: command, result: `${command} : command not found ` }]);
+      }
     }
 
     return validCommand;
