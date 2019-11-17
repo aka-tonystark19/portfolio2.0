@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   contactContainer: {
-    marginTop: "60px",
+    marginTop: "40px",
     background: "#f6f9fc"
   },
   title: {
@@ -28,6 +28,7 @@ const useStyles = makeStyles(theme => ({
   },
   contactItem: {
     margin: "32px",
+    marginTop: "0px",
     textDecoration: "none",
     color: "black",
     position: "relative",

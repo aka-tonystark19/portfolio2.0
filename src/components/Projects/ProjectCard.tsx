@@ -6,10 +6,14 @@ const useStyles = makeStyles(theme => ({
     width: "100%",
     display: "flex",
     background: "white",
-    boxShadow: "0 50px 100px rgba(50,50,93,.05), 0 15px 35px rgba(50,50,93,.1), 0 5px 15px rgba(0,0,0,.1)",
+    boxShadow: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)",
+    transition: "all 0.3s cubic-bezier(.25,.8,.25,1)",
     fontFamily: "Roboto",
     color: "#525f7f",
-    marginBottom: "40px"
+    marginBottom: "40px",
+    "&:hover": {
+      boxShadow: "0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)"
+    }
   },
   cardImageContainer: {
     width: "40%",

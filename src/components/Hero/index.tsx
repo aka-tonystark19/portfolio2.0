@@ -7,7 +7,7 @@ const useStyles = makeStyles(theme => ({
     "50%": { background: "transparent" }
   },
   heroWrapper: {
-    marginTop: "100px"
+    marginTop: "60px"
   },
   title: {
     color: "#747fe0",
