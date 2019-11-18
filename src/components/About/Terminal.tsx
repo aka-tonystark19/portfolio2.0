@@ -1,7 +1,7 @@
 import React, { useEffect, useState, Fragment } from "react";
 import { evaluate } from "mathjs";
 import { makeStyles } from "@material-ui/core";
-import aboutInfoArr from "../../content/about";
+import aboutInfoArr, { CommandType } from "../../content/about";
 import { FileSystem } from "./FileSystem";
 import { element } from "prop-types";
 
@@ -74,7 +74,7 @@ const useStyles = makeStyles(theme => ({
     border: "none",
     color: "white",
     textShadow: "0 0 0 gray",
-    width: "4ch",
+    width: "0ch",
     fontSize: "18px",
     fontFamily: "Consolas",
     fontWeight: 200,
@@ -114,42 +114,13 @@ let eric = {
 };
 
 let fsCommands = ["cd", "mkdir", "touch", "cat"];
+const fs = new FileSystem();
 
 export default function Terminal() {
-  const fs = new FileSystem();
   const classes = useStyles({});
+  const [command, setCommand] = useState("");
   const [aboutInfos, setAboutInfos] = useState(aboutInfoArr);
   const [workingDir, setWorkingDir] = useState("/");
-
-  // Setup event listener for span content editable input
-  useEffect(() => {
-    let input = document.getElementById("commandInput");
-    if (input) {
-      input.addEventListener("keypress", e => {
-        let event = e as any;
-        if (event.target) {
-          let command = event.target.value;
-          let input = document.getElementById("commandInput");
-          if (event.key === "Enter") {
-            event.preventDefault();
-            console.log(command);
-            if (parseCommand(command)) {
-              event.target.value = "";
-              if (input) input.style.width = "0ch";
-            }
-          }
-        }
-      });
-
-      input.addEventListener("input", e => {
-        let event = e as any;
-        let command = event.target.value;
-        if (input) {
-          input.style.width = command.length + "ch";
-        }
-      });
-    }
-  }, []);
 
   const parseCommand = (command: string) => {
     let validCommand = true;
@@ -180,16 +151,20 @@ export default function Terminal() {
       let fsCommand = `fs.${commandParts[0]}('${commandParts[1]}')`;
       let result = eval(fsCommand);
       setAboutInfos(prevstate => [...prevstate, { command: command, result: result }]);
-      // Set new working dir
-      setWorkingDir(fs.getWorkingDir());
+      let tempWorkingDir = fs.getWorkingDir();
+      if (tempWorkingDir === "") {
+        tempWorkingDir = "/";
+      }
+      setWorkingDir(tempWorkingDir);
     } else {
-      // Try to eval for math
+      // If none of our valid commands, try to parse it as math
       try {
-        validCommand = true;
         let result = evaluate(command);
-        if (typeof result === "string")
+        if (typeof result === "string") {
           setAboutInfos(prevstate => [...prevstate, { command: command, result: result }]);
-        else throw new Error("invalid math result");
+        } else {
+          throw new Error("invalid math result");
+        }
       } catch (err) {
         validCommand = false;
         setAboutInfos(prevstate => [...prevstate, { command: command, result: `${command} : command not found ` }]);
@@ -199,18 +174,74 @@ export default function Terminal() {
     // Keep bottom of Terminal in view (when typing a lot of commands)
     var commandInput = document.getElementById("commandInput");
     if (commandInput) {
-      console.log(commandInput);
       commandInput.scrollIntoView({ behavior: "smooth", block: "center" });
     }
 
     return validCommand;
   };
 
+  // Focuses Input (used if click anywhere on terminal div)
   const focusInput = () => {
     let input = document.getElementById("commandInput");
     if (input) {
       input.focus();
     }
+  };
+
+  // Renders if aboutinfo has urls to format
+  const renderURLS = (aboutInfo: CommandType) => {
+    if (aboutInfo.urls) {
+      return aboutInfo.urls.map((url, i) => {
+        let urlName;
+        if (aboutInfo.urls && aboutInfo.urls.length === 1) {
+          urlName = url.name;
+        } else if (i === 0) {
+          urlName = `["` + url.name + ", ";
+        } else if (aboutInfo.urls && i < aboutInfo.urls.length - 1) {
+          urlName = '"' + url.name + '", ';
+        } else {
+          urlName = '"' + url.name + '"]';
+        }
+        return (
+          <a href={url.src} target="_blank">
+            {urlName}
+          </a>
+        );
+      });
+    }
+  };
+
+  // Renders if aboutInfo has file/folder data
+  const renderFileFolder = (aboutInfo: CommandType) => {
+    if (aboutInfo.files) {
+      return aboutInfo.files.map(file => {
+        return (
+          <Fragment>
+            <span className={file.type === "folder" ? classes.infoFolder : classes.infoFile}>{file.fileName} </span>
+          </Fragment>
+        );
+      });
+    }
+  };
+
+  // Parses key if enter, submits string
+  const submitCommand = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      if (parseCommand(command)) {
+        let input = document.getElementById("commandInput");
+        setCommand("");
+        if (input) {
+          input.style.width = "0ch";
+        }
+      }
+    }
+  };
+
+  // Sets command on change, also updates input width
+  const setCommandInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCommand(event.target.value);
+    event.target.style.width = event.target.value.length + "ch";
   };
 
   return (
@@ -225,42 +256,23 @@ export default function Terminal() {
           return (
             <div className={classes.aboutInfo}>
               <div className={classes.infoCommand}>{aboutInfo.command}</div>
-              {!aboutInfo.urls && <div className={classes.infoResult}>{aboutInfo.result}</div>}
-              {aboutInfo.urls &&
-                aboutInfo.urls.map((url, i) => {
-                  let urlName;
-                  if (aboutInfo.urls && aboutInfo.urls.length === 1) {
-                    urlName = url.name;
-                  } else if (i === 0) {
-                    urlName = `["` + url.name + ", ";
-                  } else if (aboutInfo.urls && i < aboutInfo.urls.length - 1) {
-                    urlName = '"' + url.name + '", ';
-                  } else {
-                    urlName = '"' + url.name + '"]';
-                  }
-                  return (
-                    <a href={url.src} target="_blank">
-                      {urlName}
-                    </a>
-                  );
-                })}
-              {aboutInfo.files &&
-                aboutInfo.files.map(file => {
-                  return (
-                    <Fragment>
-                      <span className={file.type === "folder" ? classes.infoFolder : classes.infoFile}>
-                        {file.fileName}{" "}
-                      </span>
-                    </Fragment>
-                  );
-                })}
+              {aboutInfo.result && <div className={classes.infoResult}>{aboutInfo.result}</div>}
+              {aboutInfo.urls && renderURLS(aboutInfo)}
+              {aboutInfo.files && renderFileFolder(aboutInfo)}
             </div>
           );
         })}
         <div className={classes.aboutInfo}>
           <div className={classes.infoCommand}>
             <span style={{ color: "#2d84ea" }}>{workingDir}</span>{" "}
-            <input id="commandInput" className={classes.commandInput} autoComplete="off" placeholder="help" />
+            <input
+              id="commandInput"
+              className={classes.commandInput}
+              autoComplete="off"
+              value={command}
+              onChange={e => setCommandInput(e)}
+              onKeyDown={e => submitCommand(e)}
+            />
             <span className="caret">&nbsp;</span>
           </div>
         </div>

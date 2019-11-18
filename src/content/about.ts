@@ -16,7 +16,7 @@ export default [
   { command: "eric.languages", result: `["English", "French"]` }
 ] as CommandType[];
 
-interface CommandType {
+export interface CommandType {
   command: string;
   result?: string;
   urls?: { name: string; src: string }[];
