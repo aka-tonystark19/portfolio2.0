@@ -3,6 +3,7 @@ import { evaluate } from "mathjs";
 import { makeStyles } from "@material-ui/core";
 import aboutInfoArr from "../../content/about";
 import { FileSystem } from "./FileSystem";
+import { element } from "prop-types";
 
 const useStyles = makeStyles(theme => ({
   terminal: {
@@ -185,12 +186,20 @@ export default function Terminal() {
       try {
         validCommand = true;
         let result = evaluate(command);
-        setAboutInfos(prevstate => [...prevstate, { command: command, result: result }]);
+        if (typeof result === "string")
+          setAboutInfos(prevstate => [...prevstate, { command: command, result: result }]);
+        else throw new Error("invalid math result");
       } catch (err) {
         validCommand = false;
-        console.log(err);
         setAboutInfos(prevstate => [...prevstate, { command: command, result: `${command} : command not found ` }]);
       }
+    }
+
+    // Keep bottom of Terminal in view (when typing a lot of commands)
+    var commandInput = document.getElementById("commandInput");
+    if (commandInput) {
+      console.log(commandInput);
+      commandInput.scrollIntoView({ behavior: "smooth", block: "center" });
     }
 
     return validCommand;
@@ -204,7 +213,7 @@ export default function Terminal() {
   };
 
   return (
-    <div className={classes.terminal} onClick={() => focusInput()}>
+    <div className={classes.terminal} onClick={() => focusInput()} id="terminal">
       <div className={classes.header}>
         <div className={classes.termButton + " " + classes.exit}></div>
         <div className={classes.termButton + " " + classes.minimize}></div>
@@ -250,7 +259,7 @@ export default function Terminal() {
         <div className={classes.aboutInfo}>
           <div className={classes.infoCommand}>
             <span style={{ color: "#2d84ea" }}>{workingDir}</span>{" "}
-            <input id="commandInput" className={classes.commandInput} />
+            <input id="commandInput" className={classes.commandInput} autoComplete="off" />
             <span className="caret">&nbsp;</span>
           </div>
         </div>
