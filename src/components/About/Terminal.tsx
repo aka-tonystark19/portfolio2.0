@@ -155,9 +155,7 @@ export default function Terminal() {
     let validCommand = true;
     command = command.toLocaleLowerCase();
 
-    if (command.includes("=")) {
-      setAboutInfos(prevstate => [...prevstate, { command: command, result: "Stop trying to overwrite me 😥" }]);
-    } else if (command === "eric") {
+    if (command === "eric") {
       setAboutInfos(prevstate => [...prevstate, { command: command, result: JSON.stringify(eric) }]);
     } else if (command === "eric.currentlocation") {
       setAboutInfos(prevstate => [...prevstate, aboutInfos[0]]);
@@ -170,7 +168,10 @@ export default function Terminal() {
     } else if (command === "eric.languages") {
       setAboutInfos(prevstate => [...prevstate, aboutInfos[4]]);
     } else if (command === "help") {
-      setAboutInfos(prevstate => [...prevstate, { command: "help", result: "try playing around to find cool stuff!" }]);
+      setAboutInfos(prevstate => [
+        ...prevstate,
+        { command: "help", result: "supported commands are : cd, ls, mkdir, cat, touch" }
+      ]);
     } else if (command === "ls") {
       let result = fs.ls();
       setAboutInfos(prevstate => [...prevstate, { command: command, files: result }]);
