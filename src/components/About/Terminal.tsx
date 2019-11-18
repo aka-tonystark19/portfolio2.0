@@ -118,6 +118,7 @@ export default function Terminal() {
   const fs = new FileSystem();
   const classes = useStyles({});
   const [aboutInfos, setAboutInfos] = useState(aboutInfoArr);
+  const [workingDir, setWorkingDir] = useState("/");
 
   // Setup event listener for span content editable input
   useEffect(() => {
@@ -177,6 +178,8 @@ export default function Terminal() {
       let fsCommand = `fs.${commandParts[0]}('${commandParts[1]}')`;
       let result = eval(fsCommand);
       setAboutInfos(prevstate => [...prevstate, { command: command, result: result }]);
+      // Set new working dir
+      setWorkingDir(fs.getWorkingDir());
     } else {
       // Try to eval for math
       try {
@@ -246,6 +249,7 @@ export default function Terminal() {
         })}
         <div className={classes.aboutInfo}>
           <div className={classes.infoCommand}>
+            <span style={{ color: "#2d84ea" }}>{workingDir}</span>{" "}
             <input id="commandInput" className={classes.commandInput} />
             <span className="caret">&nbsp;</span>
           </div>

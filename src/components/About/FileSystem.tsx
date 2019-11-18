@@ -16,6 +16,10 @@ export class FileSystem {
 
   private workingDir = "";
 
+  public getWorkingDir() {
+    return this.workingDir;
+  }
+
   // Returns content of a file
   public cat(fileName: string) {
     let files = this.getPathContents();
