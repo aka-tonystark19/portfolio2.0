@@ -14,4 +14,11 @@ export default [
     result: `["TypeScript", "C", "PHP", "TDD", "HTML5 / CSS3", "React", "Redux", "Material UI", "Node.js", "Express", "Laravel", "REST API", "MySQL", "MongoDB", "Redis", "Linux", "Git", "Networking"]`
   },
   { command: "eric.languages", result: `["English", "French"]` }
-];
+] as CommandType[];
+
+interface CommandType {
+  command: string;
+  result?: string;
+  urls?: { name: string; src: string }[];
+  files?: { fileName: string; type: string }[];
+}

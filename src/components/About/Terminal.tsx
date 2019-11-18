@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import { evaluate } from "mathjs";
 import { makeStyles } from "@material-ui/core";
 import aboutInfoArr from "../../content/about";
+import { FileSystem } from "./FileSystem";
 
 const useStyles = makeStyles(theme => ({
   terminal: {
@@ -32,7 +33,7 @@ const useStyles = makeStyles(theme => ({
     background: "#33c948"
   },
   body: {
-    background: "#5a5d7a",
+    background: "#1e1e1e",
     padding: "16px",
     fontSize: "18px"
   },
@@ -57,11 +58,17 @@ const useStyles = makeStyles(theme => ({
   infoResult: {
     color: "#e7d184"
   },
+  infoFile: {
+    color: "white"
+  },
+  infoFolder: {
+    color: "#0dbc79"
+  },
   "@keyframes caret": {
     "50%": { background: "transparent" }
   },
   commandInput: {
-    background: "#5a5d7a",
+    background: "#1e1e1e",
     outline: "none",
     border: "none",
     color: "white",
@@ -105,7 +112,10 @@ let eric = {
   languages: ["English", "French"]
 };
 
+let fsCommands = ["cd", "mkdir", "touch", "cat"];
+
 export default function Terminal() {
+  const fs = new FileSystem();
   const classes = useStyles({});
   const [aboutInfos, setAboutInfos] = useState(aboutInfoArr);
 
@@ -159,6 +169,14 @@ export default function Terminal() {
       setAboutInfos(prevstate => [...prevstate, aboutInfos[4]]);
     } else if (command === "help") {
       setAboutInfos(prevstate => [...prevstate, { command: "help", result: "try playing around to find cool stuff!" }]);
+    } else if (command === "ls") {
+      let result = fs.ls();
+      setAboutInfos(prevstate => [...prevstate, { command: command, files: result }]);
+    } else if (fsCommands.indexOf(command.split(" ")[0]) > -1) {
+      let commandParts = command.split(" ");
+      let fsCommand = `fs.${commandParts[0]}('${commandParts[1]}')`;
+      let result = eval(fsCommand);
+      setAboutInfos(prevstate => [...prevstate, { command: command, result: result }]);
     } else {
       // Try to eval for math
       try {
@@ -198,11 +216,11 @@ export default function Terminal() {
               {aboutInfo.urls &&
                 aboutInfo.urls.map((url, i) => {
                   let urlName;
-                  if (aboutInfo.urls.length === 1) {
+                  if (aboutInfo.urls && aboutInfo.urls.length === 1) {
                     urlName = url.name;
                   } else if (i === 0) {
                     urlName = `["` + url.name + ", ";
-                  } else if (i < aboutInfo.urls.length - 1) {
+                  } else if (aboutInfo.urls && i < aboutInfo.urls.length - 1) {
                     urlName = '"' + url.name + '", ';
                   } else {
                     urlName = '"' + url.name + '"]';
@@ -211,6 +229,16 @@ export default function Terminal() {
                     <a href={url.src} target="_blank">
                       {urlName}
                     </a>
+                  );
+                })}
+              {aboutInfo.files &&
+                aboutInfo.files.map(file => {
+                  return (
+                    <Fragment>
+                      <span className={file.type === "folder" ? classes.infoFolder : classes.infoFile}>
+                        {file.fileName}{" "}
+                      </span>
+                    </Fragment>
                   );
                 })}
             </div>
