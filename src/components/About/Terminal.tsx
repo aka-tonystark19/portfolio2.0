@@ -74,7 +74,7 @@ const useStyles = makeStyles(theme => ({
     border: "none",
     color: "white",
     textShadow: "0 0 0 gray",
-    width: "0px",
+    width: "4ch",
     fontSize: "18px",
     fontFamily: "Consolas",
     fontWeight: 200,
@@ -260,7 +260,7 @@ export default function Terminal() {
         <div className={classes.aboutInfo}>
           <div className={classes.infoCommand}>
             <span style={{ color: "#2d84ea" }}>{workingDir}</span>{" "}
-            <input id="commandInput" className={classes.commandInput} autoComplete="off" />
+            <input id="commandInput" className={classes.commandInput} autoComplete="off" placeholder="help" />
             <span className="caret">&nbsp;</span>
           </div>
         </div>
