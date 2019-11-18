@@ -84,29 +84,37 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+let fs: FileSystem;
 let fsCommands = ["cd", "mkdir", "touch", "cat"];
-const fs = new FileSystem();
+let ericCommands: any = {
+  "eric.currentlocation": aboutInfoArr[0],
+  "eric.contactinfo": aboutInfoArr[1],
+  "eric.resume": aboutInfoArr[2],
+  "eric.skills": aboutInfoArr[3],
+  "eric.languages": aboutInfoArr[4]
+};
 
-export default function Terminal() {
+interface TerminalProps {
+  paths: any;
+}
+
+export default function Terminal(props: TerminalProps) {
   const classes = useStyles({});
   const [command, setCommand] = useState("help");
   const [aboutInfos, setAboutInfos] = useState(aboutInfoArr);
   const [workingDir, setWorkingDir] = useState("/");
 
+  // Setup filesystem paths + custom commands
+  useEffect(() => {
+    fs = new FileSystem(props.paths);
+  }, []);
+
   const parseCommand = (command: string) => {
     let validCommand = true;
     command = command.toLocaleLowerCase();
 
-    if (command === "eric.currentlocation") {
-      setAboutInfos(prevstate => [...prevstate, aboutInfos[0]]);
-    } else if (command === "eric.contactinfo") {
-      setAboutInfos(prevstate => [...prevstate, aboutInfos[1]]);
-    } else if (command === "eric.resume") {
-      setAboutInfos(prevstate => [...prevstate, aboutInfos[2]]);
-    } else if (command === "eric.skills") {
-      setAboutInfos(prevstate => [...prevstate, aboutInfos[3]]);
-    } else if (command === "eric.languages") {
-      setAboutInfos(prevstate => [...prevstate, aboutInfos[4]]);
+    if (ericCommands[command]) {
+      setAboutInfos(prevstate => [...prevstate, ericCommands[command]]);
     } else if (command === "help") {
       setAboutInfos(prevstate => [
         ...prevstate,
