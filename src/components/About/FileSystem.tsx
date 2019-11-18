@@ -61,8 +61,8 @@ export class FileSystem {
     let foundDir = true;
 
     // Trying to go back dirs
-    if (folderName === "./" || folderName === "../") {
-      if (folderName === "./") {
+    if (folderName === "/" || folderName === "../") {
+      if (folderName === "/") {
         this.workingDir = "";
       } else if (folderName === "../") {
         let lastIndex = this.workingDir.lastIndexOf("/");
