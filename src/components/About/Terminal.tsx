@@ -3,7 +3,6 @@ import { evaluate } from "mathjs";
 import { makeStyles } from "@material-ui/core";
 import aboutInfoArr, { CommandType } from "../../content/about";
 import { FileSystem } from "./FileSystem";
-import { element } from "prop-types";
 
 const useStyles = makeStyles(theme => ({
   terminal: {
@@ -74,7 +73,7 @@ const useStyles = makeStyles(theme => ({
     border: "none",
     color: "white",
     textShadow: "0 0 0 gray",
-    width: "0ch",
+    width: "4ch",
     fontSize: "18px",
     fontFamily: "Consolas",
     fontWeight: 200,
@@ -85,40 +84,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-let eric = {
-  currentLocation: "Montreal, QC, Canada",
-  contactInfo: ["ericellb@gmail.com", "LinkedIn", "github"],
-  resume: "resume.pdf",
-  skills: [
-    "TypeScript",
-    "C",
-    "PHP",
-    "TDD",
-    "HTML5",
-    "CSS3",
-    "React",
-    "Redux",
-    "Material Design",
-    "NodeJS",
-    "Express",
-    "Laravel",
-    "REST API",
-    "MySQL",
-    "MongoDB",
-    "Redis",
-    "Linux",
-    "Git",
-    "Networking"
-  ],
-  languages: ["English", "French"]
-};
-
 let fsCommands = ["cd", "mkdir", "touch", "cat"];
 const fs = new FileSystem();
 
 export default function Terminal() {
   const classes = useStyles({});
-  const [command, setCommand] = useState("");
+  const [command, setCommand] = useState("help");
   const [aboutInfos, setAboutInfos] = useState(aboutInfoArr);
   const [workingDir, setWorkingDir] = useState("/");
 
@@ -126,9 +97,7 @@ export default function Terminal() {
     let validCommand = true;
     command = command.toLocaleLowerCase();
 
-    if (command === "eric") {
-      setAboutInfos(prevstate => [...prevstate, { command: command, result: JSON.stringify(eric) }]);
-    } else if (command === "eric.currentlocation") {
+    if (command === "eric.currentlocation") {
       setAboutInfos(prevstate => [...prevstate, aboutInfos[0]]);
     } else if (command === "eric.contactinfo") {
       setAboutInfos(prevstate => [...prevstate, aboutInfos[1]]);
@@ -169,12 +138,6 @@ export default function Terminal() {
         validCommand = false;
         setAboutInfos(prevstate => [...prevstate, { command: command, result: `${command} : command not found ` }]);
       }
-    }
-
-    // Keep bottom of Terminal in view (when typing a lot of commands)
-    var commandInput = document.getElementById("commandInput");
-    if (commandInput) {
-      commandInput.scrollIntoView({ behavior: "smooth", block: "center" });
     }
 
     return validCommand;
@@ -234,6 +197,12 @@ export default function Terminal() {
         if (input) {
           input.style.width = "0ch";
         }
+      }
+
+      // Keep bottom of Terminal in view (when typing a lot of commands)
+      var commandInput = document.getElementById("commandInput");
+      if (commandInput) {
+        commandInput.scrollIntoView({ behavior: "smooth", block: "center" });
       }
     }
   };
