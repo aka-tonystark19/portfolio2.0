@@ -27,6 +27,15 @@ export default [
     skills: ["PHP / Laravel", "TypeScript", "React", "Redux", "Material-UI"]
   },
   {
+    title: "My Portfolio",
+    description:
+      "My personal project portfolio, enhanced with a working Mock Filesystem in the Terminal above. If you havn't yet, type some commands in! In the process of a code refactor.",
+    liveurl: "https://ericellb.com/",
+    repourl: "https://github.com/ericellb/portfolio2.0",
+    imageurl: "portfolio",
+    skills: ["TypeScript", "React", "Redux", "Material-UI"]
+  },
+  {
     title: "Visual Sort",
     description:
       "Visualized sorting algorithm application built in TypeScript + React + Express. Visualize how various sorting algorithms work, and be able to control speed and pause / play sorting",
