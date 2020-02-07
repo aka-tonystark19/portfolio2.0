@@ -3,7 +3,8 @@ import Terminal from "./Terminal";
 
 let paths = {
   experience: {
-    zayo: "I am currently a Network Technician at Zayo. (View Resume for more info)",
+    turbulent: "I am currently a backend developer at Turbulent, working on Microservices for Star Citizen!",
+    zayo: "I was a Network Technician at Zayo. (View Resume for more info)",
     wowwee: "I was a Embedded Software Developer at WowWee. (View Resume for more info)",
     allstream: "I was a Network Technican at Allstream. (View Resume for more info)"
   },

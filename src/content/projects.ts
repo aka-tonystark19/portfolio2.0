@@ -2,7 +2,7 @@ export default [
   {
     title: "React Discord Clone",
     description:
-      "Discord clone built in Typescript + React + Express. I created this to better understand Websockets and to learn Functional Components in React. The application has full functionality including Server + Channel creations, Private Messaging and even Voice Chat using WebRTC.",
+      "Discord clone built in Typescript + React + Express. Functionality to Create Servers / Channels, Private Messages and even Voice chat using WebRTC!",
     liveurl: "https://ericellb.github.io/React-Discord-Clone/",
     repourl: "https://github.com/ericellb/React-Discord-Clone",
     imageurl: "discordp",
@@ -11,7 +11,7 @@ export default [
   {
     title: "Lightning Link",
     description:
-      "URL Shortener built in TypeScript + React + Express. I created this to design a system to be highly scalable from the start, uses caching to provide Lighting Fast redirection. Also provides analytics and user demographic of your generated LTNG Links.",
+      "URL Shortener built in TypeScript + React + Express. Provides analytics and user demographic of generated LTNG Links.",
     liveurl: "https://ltng.link/#/",
     repourl: "https://github.com/ericellb/Lightning-Link",
     imageurl: "ltnglink",
