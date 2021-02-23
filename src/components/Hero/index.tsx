@@ -39,7 +39,7 @@ export default function Hero() {
     <div className={classes.heroWrapper}>
       <TypeWriter text="Eric Ellbogen" className={classes.title} />
       <div className={classes.content}>
-        Fullstack developer with a passion for building rich and responsive web applications.
+        Fullstack developer currently building backend services for Star Citizen at Turbulent
       </div>
     </div>
   );
