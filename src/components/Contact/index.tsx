@@ -53,7 +53,7 @@ const useStyles = makeStyles(theme => ({
   },
   footer: {
     textAlign: "center",
-    paddingBottom: "80px"
+    paddingBottom: "40px"
   }
 }));
 
@@ -77,7 +77,7 @@ export default function Contact() {
           Github
         </a>
       </div>
-      <div className={classes.footer}> Eric Ellbogen 2019 </div>
+      <div className={classes.footer}> Eric Ellbogen 2021 </div>
     </div>
   );
 }
